@@ -1,6 +1,17 @@
-# Merge Sort
+# 🔀 Merge Sort
 
-## 1. Idea
+> [!NOTE]
+> **Merge Sort** follows the **Divide and Conquer** paradigm by recursively splitting the array into smaller halves, sorting them, and merging them back together.
+
+### 🔗 Practice Links
+
+- **GeeksforGeeks:** https://www.geeksforgeeks.org/problems/merge-sort/1
+- **LeetCode:** https://leetcode.com/problems/sort-an-array/
+- **My LeetCode Solution:** https://leetcode.com/problems/sort-an-array/submissions/2071306168
+
+---
+
+# 1️⃣ Idea
 
 Merge Sort follows the **Divide and Conquer** approach.
 
@@ -10,10 +21,13 @@ Then, it merges the sorted subarrays back together to form the final sorted arra
 
 Initially,
 
+```text
 Whole Array
+```
 
-Example:
+### Example
 
+```text
 38 27 43 3 9 82 10
 
 ↓
@@ -39,21 +53,23 @@ Example:
 ↓
 
 3 9 10 27 38 43 82
+```
 
 ---
 
-## 2. Mental Model
+# 2️⃣ Mental Model
 
-Imagine sorting a large stack of papers.
+> 📄 Imagine sorting a large stack of papers.
 
-Instead of sorting the entire stack at once, split it into two smaller stacks.
-Keep dividing until each stack contains only one paper.
+Instead of sorting the entire stack at once, split it into **two smaller stacks**.
+
+Keep dividing until each stack contains only **one paper**.
 
 Finally, merge the smaller sorted stacks to obtain one completely sorted stack.
 
 ---
 
-## 3. Algorithm
+# 3️⃣ Algorithm
 
 1. Divide the array into two halves.
 2. Recursively sort the left half.
@@ -64,7 +80,7 @@ Repeat until the entire array becomes sorted.
 
 ---
 
-## 4. Recursive Code
+# 4️⃣ Recursive Code
 
 ```java
 public static void mergeSort(int[] arr, int left, int right){
@@ -79,7 +95,6 @@ public static void mergeSort(int[] arr, int left, int right){
 
     merge(arr, left, mid, right);
 }
-
 
 public static void merge(int[] arr, int left, int mid, int right){
 
@@ -135,7 +150,7 @@ public static void merge(int[] arr, int left, int mid, int right){
 
 ---
 
-## 5. Iterative Code (Bottom-Up Merge Sort)
+# 5️⃣ Iterative Code (Bottom-Up Merge Sort)
 
 ```java
 public static void mergeSort(int[] arr){
@@ -161,71 +176,82 @@ public static void mergeSort(int[] arr){
 }
 ```
 
+> [!TIP]
 > The `merge()` function remains the same as the recursive version.
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Recursive
+### Recursive
 
+```text
 Divide
+      ↓
+Sort Left Half
+      ↓
+Sort Right Half
+      ↓
+Merge
+```
 
-→ Sort Left Half
+### Iterative
 
-→ Sort Right Half
-
-→ Merge
-
-#### Iterative
-
+```text
 Merge subarrays of size 1
+      ↓
+Merge subarrays of size 2
+      ↓
+Merge subarrays of size 4
+      ↓
+Merge subarrays of size 8
+      ↓
+Continue until the entire array is merged
+```
 
-→ Merge subarrays of size 2
-
-→ Merge subarrays of size 4
-
-→ Merge subarrays of size 8
-
-→ Continue until the entire array is merged.
-
-Instead of recursively dividing the array,
-the iterative version starts with single-element subarrays and repeatedly merges larger blocks.
+Instead of **recursively dividing** the array, the iterative version starts with **single-element subarrays** and repeatedly merges larger blocks.
 
 ---
 
-## 7. Dry Run
+# 7️⃣ Dry Run
 
-Array:
+Array
 
-[8,4,5,2]
+```text
+[8, 4, 5, 2]
+```
 
-Divide
+### Divide
 
+```text
 8 4 | 5 2
 
 ↓
 
 8 | 4 | 5 | 2
+```
 
-Merge
+### Merge
 
+```text
 8 + 4
 
 ↓
 
 4 8
+```
 
-Merge
-
+```text
 5 + 2
 
 ↓
 
 2 5
+```
 
-Final Merge
+### Final Merge
 
+```text
 4 8
 
 2 5
@@ -233,114 +259,133 @@ Final Merge
 ↓
 
 2 4 5 8
-
-Sorted.
-
----
-
-## 8. Complexity
-
-Best Case  : O(n log n)
-
-Average    : O(n log n)
-
-Worst      : O(n log n)
-
-Extra Space: O(n)
-
-Reason:
-
-The array is divided into **log₂n** levels.
-At every level, all **n** elements are processed during merging.
-
-Hence, 
-O(log n) × O(n) = **O(n log n)**
-
----
-
-## 9. Stable?
-
-✅ Yes
-
-Reason:
-
-When two elements are equal,
-
-```java
-if(arr[i] <= arr[j])
 ```
 
-the left element is copied first.
-Thus, the original relative order of equal elements is preserved.
+✅ Sorted Array
+
+```text
+2 4 5 8
+```
 
 ---
 
-## 10. In-place?
+# 8️⃣ Complexity
 
-❌ No
+### Time Complexity
 
-Reason:
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n log n)** |
+| 🟡 Average | **O(n log n)** |
+| 🔴 Worst | **O(n log n)** |
 
-A temporary array is required during every merge operation.
-Hence, Merge Sort requires O(n) extra space.
+### Why?
 
----
+- The array is divided into **log₂ n** levels.
+- At each level, all **n** elements are processed during merging.
 
-## 11. Adaptive?
+Therefore,
 
-❌ No
+**O(log n) × O(n) = O(n log n)**
 
-Reason:
+### Space Complexity
 
-Even if the array is already sorted,
-Merge Sort still divides and merges the entire array.
-Its running time remains O(n log n).
+| Type | Complexity |
+|------|------------|
+| Auxiliary Space | **O(n)** |
 
----
+### Why?
 
-## 12. Number of Comparisons
+Temporary arrays are created during each merge operation.
 
-Best Case : O(n log n)
-
-Worst Case : O(n log n)
-
-Reason:
-
-Every level processes all elements,
-and there are log₂n levels.
+Hence, Merge Sort requires **O(n)** extra space.
 
 ---
 
-## 13. Number of Merge Operations
+# 9️⃣ Stable?
 
-At every level, adjacent sorted subarrays are merged.
+✅ **Yes**
 
-Number of levels = log₂n
-
-Every level processes all n elements.
-
----
-
-## 14. When is Merge Sort useful?
-
-- Large datasets.
-- Linked Lists.
-- External Sorting.
-- Stable sorting is required.
-- Guaranteed O(n log n) performance is needed.
+> [!TIP]
+> When two elements are equal,
+>
+> ```java
+> if(leftArr[i] <= rightArr[j])
+> ```
+>
+> the element from the **left subarray** is copied first.
+>
+> Therefore, the **relative order of equal elements is preserved**.
 
 ---
 
-## 15. Key Takeaways
+# 🔟 In-place?
 
-✅ Divide and Conquer algorithm.
+❌ **No**
 
-✅ Stable.
+> [!TIP]
+> Merge Sort creates temporary arrays while merging.
+>
+> Hence, it requires **O(n)** auxiliary space.
 
-✅ Guaranteed O(n log n) time complexity.
+---
 
-✅ Recursive and Iterative implementations are possible.
+# 1️⃣1️⃣ Adaptive?
 
-✅ Requires O(n) extra space.
+❌ **No**
 
-✅ Preferred for Linked Lists and External Sorting.
+> [!TIP]
+> Even if the array is already sorted, Merge Sort still performs every divide and merge step.
+>
+> Therefore, the running time remains **O(n log n)**.
+
+---
+
+# 1️⃣2️⃣ Number of Comparisons
+
+| Case | Comparisons |
+|------|-------------|
+| 🟢 Best | **O(n log n)** |
+| 🔴 Worst | **O(n log n)** |
+
+> Every level processes all elements, and there are **log₂ n** levels.
+
+---
+
+# 1️⃣3️⃣ Number of Merge Operations
+
+- Adjacent sorted subarrays are merged at every level.
+- Number of levels = **log₂ n**
+- Every level processes all **n** elements.
+
+---
+
+# 1️⃣4️⃣ When is Merge Sort Useful?
+
+✅ Large datasets
+
+✅ Linked Lists
+
+✅ External Sorting
+
+✅ Stable sorting is required
+
+✅ Guaranteed **O(n log n)** performance is needed
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Divide and Conquer algorithm
+>
+> ✅ Stable
+>
+> ✅ Guaranteed **O(n log n)** time complexity
+>
+> ✅ Recursive and Iterative implementations are possible
+>
+> ❌ Not In-place (requires **O(n)** extra space)
+>
+> ✅ Preferred for Linked Lists and External Sorting
