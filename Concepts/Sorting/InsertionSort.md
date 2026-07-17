@@ -1,24 +1,37 @@
-# Insertion Sort
+# 📥 Insertion Sort
 
-## 1. Idea
+> [!NOTE]
+> **Insertion Sort** builds a sorted portion of the array by inserting one element at a time into its correct position.
+
+### 🔗 Practice Link
+
+**GeeksforGeeks:**  
+https://www.geeksforgeeks.org/problems/insertion-sort/1
+
+---
+
+# 1️⃣ Idea
 
 Insertion Sort builds the sorted array **one element at a time**.
 
 At every pass,
 
-- Left side → Sorted
-- Right side → Unsorted
+| Left Side | Right Side |
+|-----------|------------|
+| ✅ Sorted | ⏳ Unsorted |
 
-Each new element is picked from the unsorted part and inserted into its correct position in the sorted part.
+Each new element is picked from the **unsorted** part and inserted into its correct position in the **sorted** part.
 
 Initially,
 
-Sorted = First Element
-
+```
+Sorted   = First Element
 Unsorted = Remaining Elements
+```
 
-Example:
+### Example
 
+```text
 64 | 25 12 22 11
 
 ↓
@@ -36,21 +49,23 @@ Example:
 ↓
 
 11 12 22 25 64
+```
 
 ---
 
-## 2. Mental Model
+# 2️⃣ Mental Model
 
-Imagine arranging playing cards in your hand.
-You pick one new card at a time and insert it into its correct position among the cards already arranged.
+> 🃏 Imagine arranging playing cards in your hand.
+
+You pick **one new card** at a time and insert it into its correct position among the cards that are already arranged.
 
 ---
 
-## 3. Algorithm
+# 3️⃣ Algorithm
 
-For every element starting from index 1,
+For every element starting from **index 1**:
 
-1. Store the current element (key).
+1. Store the current element (**key**).
 2. Compare it with elements on its left.
 3. Shift all larger elements one position to the right.
 4. Insert the key into its correct position.
@@ -59,189 +74,203 @@ Repeat until the array is sorted.
 
 ---
 
-## 4. Iterative Code
+# 4️⃣ Iterative Code
 
 ```java
 public static void insertionSort(int[] arr){
     int n = arr.length;
-    for(int i=1;i<n;i++){
+
+    for(int i = 1; i < n; i++){
         int key = arr[i];
-        int j = i-1;
-        while(j>=0 && arr[j] > key){
-            arr[j+1] = arr[j];
+        int j = i - 1;
+
+        while(j >= 0 && arr[j] > key){
+            arr[j + 1] = arr[j];
             j--;
         }
-        arr[j+1] = key;
+
+        arr[j + 1] = key;
     }
 }
 ```
 
 ---
 
-## 5. Recursive Code
+# 5️⃣ Recursive Code
 
 ```java
 public static void insertionSort(int[] arr){
     helper(arr,1);
 }
+
 private static void helper(int[] arr,int index){
+
     if(index == arr.length)
         return;
+
     int key = arr[index];
-    int j = index-1;
-    while(j>=0 && arr[j] > key){
-        arr[j+1] = arr[j];
+    int j = index - 1;
+
+    while(j >= 0 && arr[j] > key){
+        arr[j + 1] = arr[j];
         j--;
     }
-    arr[j+1] = key;
-    helper(arr,index+1);
+
+    arr[j + 1] = key;
+
+    helper(arr,index + 1);
 }
 ```
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Iterative:
+### Iterative
 
-for every index → pick key → shift larger elements → insert key → next index
+```text
+for every index
+      ↓
+pick key
+      ↓
+shift larger elements
+      ↓
+insert key
+      ↓
+next index
+```
 
-#### Recursive:
+### Recursive
 
-helper(index) → insert current element → helper(index+1)
+```text
+helper(index)
+      ↓
+insert current element
+      ↓
+helper(index + 1)
+```
 
-Instead of the loop increasing the index,
-the recursive call increases it.
+Instead of the **loop** increasing the index, the **recursive call** increases it.
 
 ---
 
-## 7. Dry Run
+# 7️⃣ Dry Run
 
-Array: [5,2,4,6,1]
+Array
 
-Pass 1 | Key = 2
+```text
+[5, 2, 4, 6, 1]
+```
 
-5 shifts right
+| Pass | Key | Action | Array |
+|------|-----|--------|-------|
+| Initial | - | Initial Array | 5 2 4 6 1 |
+| 1 | 2 | 5 shifts right | 2 5 4 6 1 |
+| 2 | 4 | 5 shifts right | 2 4 5 6 1 |
+| 3 | 6 | Already in correct position | 2 4 5 6 1 |
+| 4 | 1 | 6,5,4,2 shift right | 1 2 4 5 6 |
 
-2 5 4 6 1
+✅ Sorted Array
 
-
-Pass 2 | Key = 4
-
-5 shifts right
-
-2 4 5 6 1
-
-
-Pass 3 | Key = 6
-
-Already correct
-
-2 4 5 6 1
-
-
-Pass 4 | Key = 1
-
-6,5,4,2 shift right
-
+```text
 1 2 4 5 6
-
-Sorted.
-
----
-
-## 8. Complexity
-
-Best Case  : O(n)
-
-Average    : O(n²)
-
-Worst      : O(n²)
-
-Extra Space: O(1)
-
-Reason:
-
-If the array is already sorted,
-only one comparison is needed per pass.
-In the worst case (reverse sorted),
-every element shifts through the sorted portion.
+```
 
 ---
 
-## 9. Stable?
+# 8️⃣ Complexity
 
-✅ Yes
+| Case | Time Complexity |
+|------|-----------------|
+| ✅ Best | **O(n)** |
+| 📈 Average | **O(n²)** |
+| ❌ Worst | **O(n²)** |
+| 💾 Extra Space | **O(1)** |
 
-Reason:
+### Why?
 
-Only elements **greater than** the key are shifted.
-Equal elements are never shifted past each other.
-Their relative order remains unchanged.
-
----
-
-## 10. In-place?
-
-✅ Yes
-
-Reason:
-
-Only a few variables are used.
-No extra array is created.
+- If the array is already sorted, only **one comparison** is needed per pass.
+- In the worst case (reverse sorted), every element shifts through the sorted portion.
 
 ---
 
-## 11. Adaptive?
+# 9️⃣ Stable?
 
-✅ Yes
+✅ **Yes**
 
-Reason:
-
-Already sorted arrays require very few comparisons and no shifting.
-Hence, the algorithm performs in O(n).
-
----
-
-## 12. Number of Comparisons
-
-Best Case n-1
-
-Worst Case
-
-n(n-1)/2
+> [!TIP]
+> Only elements **greater than** the key are shifted.
+>
+> Equal elements never cross each other, so their **relative order remains unchanged**.
 
 ---
 
-## 13. Number of Shifts
+# 🔟 In-place?
 
-Best Case -→ 0
+✅ **Yes**
 
-Worst Case → n(n-1)/2
-
-(Reverse sorted array)
-
----
-
-## 14. When is Insertion Sort useful?
-
-- Small datasets.
-- Nearly sorted arrays.
-- Online sorting (elements arrive one by one).
-- Used inside advanced algorithms like TimSort.
+> [!TIP]
+> Only a few variables are used.
+>
+> No extra array is created.
 
 ---
 
-## 15. Key Takeaways
+# 1️⃣1️⃣ Adaptive?
 
-✅ Builds the sorted portion one element at a time.
+✅ **Yes**
 
-✅ Inserts each element into its correct position.
+> [!TIP]
+> Already sorted arrays require very few comparisons and **no shifting**.
+>
+> Therefore, the algorithm runs in **O(n)** for the best case.
 
-✅ Stable.
+---
 
-✅ In-place.
+# 1️⃣2️⃣ Number of Comparisons
 
-✅ Adaptive.
+| Case | Comparisons |
+|------|-------------|
+| Best | **n − 1** |
+| Worst | **n(n − 1) / 2** |
 
-✅ Very efficient for nearly sorted arrays.
+---
+
+# 1️⃣3️⃣ Number of Shifts
+
+| Case | Shifts |
+|------|---------|
+| Best | **0** |
+| Worst | **n(n − 1) / 2** |
+
+*(Reverse sorted array)*
+
+---
+
+# 1️⃣4️⃣ When is Insertion Sort Useful?
+
+✅ Small datasets
+
+✅ Nearly sorted arrays
+
+✅ Online sorting (elements arrive one by one)
+
+✅ Used inside advanced algorithms like **TimSort**
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Builds the sorted portion **one element at a time**
+>
+> ✅ Inserts each element into its **correct position**
+>
+> ✅ Stable
+>
+> ✅ In-place
+>
+> ✅ Adaptive
+>
+> ✅ Extremely efficient for **nearly sorted arrays**
