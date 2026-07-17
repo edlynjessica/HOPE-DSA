@@ -180,17 +180,29 @@ Array
 
 # 8️⃣ Complexity
 
-| Case | Time Complexity |
-|------|-----------------|
-| ✅ Best | **O(n)** |
-| 📈 Average | **O(n²)** |
-| ❌ Worst | **O(n²)** |
-| 💾 Extra Space | **O(1)** |
+### Time Complexity
+
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n)** |
+| 🟡 Average | **O(n²)** |
+| 🔴 Worst | **O(n²)** |
 
 ### Why?
 
-- If the array is already sorted, only **one comparison** is needed per pass.
-- In the worst case (reverse sorted), every element shifts through the sorted portion.
+- **Best Case:** Array is already sorted, so only one comparison is needed per pass.
+- **Worst Case:** Reverse sorted array; every element shifts through the sorted portion.
+
+- ### Space Complexity
+
+| Type | Complexity |
+|------|------------|
+| Auxiliary Space | **O(1)** |
+
+### Why?
+
+Only a few extra variables (`key`, `i`, `j`) are used.
+No additional array or data structure is created.
 
 ---
 
