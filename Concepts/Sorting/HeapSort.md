@@ -1,362 +1,503 @@
-# Heap Sort
+# 🌳 Heap Sort
 
-## 1. Idea
+> [!NOTE]
+> **Heap Sort** uses a **Binary Heap** to repeatedly extract the largest element and place it at its correct position.
+
+### 🔗 Practice Links
+
+- **GeeksforGeeks:** https://www.geeksforgeeks.org/problems/heap-sort/1
+- **LeetCode:** https://leetcode.com/problems/sort-an-array/
+
+---
+
+# 1️⃣ Idea
 
 Heap Sort uses the **Binary Heap** data structure to sort elements.
 
-For ascending order,
+For **ascending order**,
 
-- Build a **Max Heap**.
-- The largest element will be at the root.
-- Swap the root with the last element.
-- Reduce the heap size.
-- Heapify the root again.
+1. Build a **Max Heap**.
+2. The largest element will always be at the **root**.
+3. Swap the root with the last element.
+4. Reduce the heap size.
+5. Heapify the root again.
 
 Repeat until only one element remains.
 
-Example:
+### Max Heap Example
 
+Array
+
+```text
+[4, 10, 3, 5, 1]
+```
+
+Max Heap
+
+```text
+        10
+       /  \
+      5    3
+     / \
+    4   1
+```
+
+### Sorting Process
+
+```text
 4 10 3 5 1
 
-→ Build Max Heap
+↓
+
+Build Max Heap
+
+↓
 
 10 5 3 4 1
 
-→ Swap Root & Last
+↓
+
+Swap Root & Last
+
+↓
 
 1 5 3 4 | 10
 
-→ Heapify
+↓
+
+Heapify
+
+↓
 
 5 4 3 1 | 10
 
-→ Swap
+↓
+
+Swap
+
+↓
 
 1 4 3 | 5 10
 
-→ Heapify
+↓
+
+Heapify
+
+↓
 
 4 1 3 | 5 10
 
-→ Swap
+↓
+
+Swap
+
+↓
 
 3 1 | 4 5 10
 
-→ Heapify
+↓
+
+Heapify
+
+↓
 
 3 1 | 4 5 10
 
-→ Swap
+↓
+
+Swap
+
+↓
 
 1 | 3 4 5 10
+```
 
-Sorted.
+✅ Sorted Array
 
----
-
-## 2. Mental Model
-
-Imagine a tournament.
-
-The strongest player always reaches the top.
-Remove the winner,
-conduct the tournament again,
-and repeat until everyone is ranked.
+```text
+1 3 4 5 10
+```
 
 ---
 
-## 3. Algorithm
+# 2️⃣ Mental Model
 
-1. Build a Max Heap.
+> 🏆 Imagine a tournament.
+
+The **strongest player** always reaches the top.
+
+Remove the winner, conduct the tournament again, and repeat until everyone is ranked.
+
+---
+
+# 3️⃣ Algorithm
+
+1. Build a **Max Heap**.
 2. Swap the root with the last element.
 3. Reduce the heap size.
 4. Heapify the root.
-5. Repeat until the heap size becomes 1.
+5. Repeat until the heap size becomes **1**.
 
 ---
 
-## 4. Iterative Code
+# 4️⃣ Iterative Code
 
 ```java
 public static void heapSort(int[] arr){
 
     int n = arr.length;
 
-    for(int i=n/2-1;i>=0;i--){
-        heapify(arr,n,i);
+    for(int i = n/2 - 1; i >= 0; i--){
+        heapify(arr, n, i);
     }
 
-    for(int i=n-1;i>0;i--){
+    for(int i = n - 1; i > 0; i--){
 
-        int temp=arr[0];
-        arr[0]=arr[i];
-        arr[i]=temp;
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
 
-        heapify(arr,i,0);
+        heapify(arr, i, 0);
     }
 }
 
-private static void heapify(int[] arr,int n,int i){
+private static void heapify(int[] arr, int n, int i){
 
     while(true){
 
-        int largest=i;
-        int left=2*i+1;
-        int right=2*i+2;
+        int largest = i;
+        int left = 2*i + 1;
+        int right = 2*i + 2;
 
-        if(left<n && arr[left]>arr[largest])
-            largest=left;
+        if(left < n && arr[left] > arr[largest])
+            largest = left;
 
-        if(right<n && arr[right]>arr[largest])
-            largest=right;
+        if(right < n && arr[right] > arr[largest])
+            largest = right;
 
-        if(largest==i)
+        if(largest == i)
             break;
 
-        int temp=arr[i];
-        arr[i]=arr[largest];
-        arr[largest]=temp;
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
 
-        i=largest;
-
+        i = largest;
     }
 }
 ```
 
 ---
 
-## 5. Recursive Code
+# 5️⃣ Recursive Code
 
 ```java
 public static void heapSort(int[] arr){
 
-    int n=arr.length;
+    int n = arr.length;
 
-    for(int i=n/2-1;i>=0;i--){
-        heapify(arr,n,i);
+    for(int i = n/2 - 1; i >= 0; i--){
+        heapify(arr, n, i);
     }
 
-    for(int i=n-1;i>0;i--){
+    for(int i = n - 1; i > 0; i--){
 
-        int temp=arr[0];
-        arr[0]=arr[i];
-        arr[i]=temp;
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
 
-        heapify(arr,i,0);
+        heapify(arr, i, 0);
     }
-
 }
 
-private static void heapify(int[] arr,int n,int i){
+private static void heapify(int[] arr, int n, int i){
 
-    int largest=i;
-    int left=2*i+1;
-    int right=2*i+2;
+    int largest = i;
+    int left = 2*i + 1;
+    int right = 2*i + 2;
 
-    if(left<n && arr[left]>arr[largest])  largest=left;
+    if(left < n && arr[left] > arr[largest])
+        largest = left;
 
-    if(right<n && arr[right]>arr[largest])  largest=right;
+    if(right < n && arr[right] > arr[largest])
+        largest = right;
 
-    if(largest!=i){
+    if(largest != i){
 
-        int temp=arr[i];
-        arr[i]=arr[largest];
-        arr[largest]=temp;
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
 
-        heapify(arr,n,largest);
+        heapify(arr, n, largest);
     }
 }
 ```
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Iterative
+### Iterative
 
+```text
 Build Heap
-
-→ Swap Root
-
-→ Heapify using loop
-
-→ Repeat
-
-#### Recursive
-
-Build Heap
-
-→ Swap Root
-
-→ Heapify using recursion
-
-→ Repeat
-
-Instead of repeatedly moving down the heap using a loop,
-
-the recursive version calls heapify() on the affected child.
-
----
-
-## 7. Dry Run
-
-Array:
-
-[4,10,3,5,1]
-
-Build Max Heap
-
-→ 10 5 3 4 1
-
+      ↓
 Swap Root
+      ↓
+Heapify using loop
+      ↓
+Repeat
+```
 
-→ 1 5 3 4 | 10
+### Recursive
+
+```text
+Build Heap
+      ↓
+Swap Root
+      ↓
+Heapify using recursion
+      ↓
+Repeat
+```
+
+Instead of repeatedly moving down the heap using a **loop**, the recursive version calls **heapify()** on the affected child.
+
+---
+
+# 7️⃣ Dry Run
+
+Array
+
+```text
+[4, 10, 3, 5, 1]
+```
+
+### Build Max Heap
+
+```text
+        10
+       /  \
+      5    3
+     / \
+    4   1
+```
+
+↓
+
+```text
+10 5 3 4 1
+```
+
+### Extract Maximum
+
+```text
+1 5 3 4 | 10
+```
+
+↓
 
 Heapify
 
-→ 5 4 3 1 | 10
+```text
+5 4 3 1 | 10
+```
 
-Swap
+↓
 
-→ 1 4 3 | 5 10
+Extract Again
+
+```text
+1 4 3 | 5 10
+```
+
+↓
 
 Heapify
 
-→ 4 1 3 | 5 10
+```text
+4 1 3 | 5 10
+```
 
-Swap
+↓
 
-→ 3 1 | 4 5 10
+Extract Again
 
-Swap
+```text
+3 1 | 4 5 10
+```
 
-→ 1 | 3 4 5 10
+↓
 
-Sorted.
+Extract Again
 
----
+```text
+1 | 3 4 5 10
+```
 
-## 8. Complexity
+✅ Sorted Array
 
-Best Case  : O(n log n)
-
-Average    : O(n log n)
-
-Worst      : O(n log n)
-
-Extra Space:
-
-Iterative : O(1)
-
-Recursive : O(log n)
-
-Reason:
-
-Building the heap takes O(n).
-Each extraction requires O(log n).
-Total : O(n) + O(n log n) = **O(n log n)**
+```text
+1 3 4 5 10
+```
 
 ---
 
-## 9. Stable?
+# 8️⃣ Complexity
 
-❌ No
+### Time Complexity
 
-Reason:
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n log n)** |
+| 🟡 Average | **O(n log n)** |
+| 🔴 Worst | **O(n log n)** |
 
-Swapping the root with the last element may change the relative order of equal elements.
+### Why?
 
----
+- Building the heap takes **O(n)**.
+- Each extraction requires **O(log n)**.
+- Total complexity becomes:
 
-## 10. In-place?
+```text
+O(n) + O(n log n)
+      =
+O(n log n)
+```
 
-✅ Yes
+### Space Complexity
 
-Reason:
+| Implementation | Complexity |
+|---------------|------------|
+| Iterative | **O(1)** |
+| Recursive | **O(log n)** |
 
-Sorting is done within the original array.
-No extra array is required.
+### Why?
 
----
-
-## 11. Adaptive?
-
-❌ No
-
-Reason:
-
-Even if the array is already sorted,
-Heap Sort still builds the heap and performs all extractions.
-
----
-
-## 12. Number of Comparisons
-
-Average : O(n log n)
-
-Worst : O(n log n)
+- The iterative implementation uses constant auxiliary space.
+- The recursive implementation uses recursion stack space of **O(log n)**.
 
 ---
 
-## 13. Number of Swaps
+# 9️⃣ Stable?
 
-Approximately : O(n log n)
+❌ **No**
 
-Each extracted element may require multiple swaps during heapify.
-
----
-
-## 14. When is Heap Sort useful?
-
-- Guaranteed O(n log n) performance.
-- Memory-constrained systems.
-- Priority Queue implementation.
-- When worst-case performance matters.
+> [!TIP]
+> Swapping the root with the last element may change the **relative order of equal elements**.
+>
+> Therefore, Heap Sort is **not stable**.
 
 ---
 
-## 15. Key Takeaways
+# 🔟 In-place?
 
-✅ Uses Binary Heap.
+✅ **Yes**
 
-✅ Root always contains the maximum element.
-
-✅ In-place.
-
-✅ Guaranteed O(n log n).
-
-✅ Not Stable.
-
-✅ Preferred when worst-case guarantees are important.
+> [!TIP]
+> Sorting is performed within the original array.
+>
+> No additional array is required.
 
 ---
 
-## 16. Terminologies
+# 1️⃣1️⃣ Adaptive?
 
-**Heap** → A Complete Binary Tree satisfying the Heap Property.
+❌ **No**
 
-**Max Heap** → Parent ≥ Children.
-
-**Min Heap** → Parent ≤ Children.
-
-**Heapify** → Restore the heap property.
-
-**Build Heap** → Convert an array into a valid heap.
-
-**Root** → The first element of the heap (index 0).
-
-**Leaf Nodes** → Nodes with no children.
-
-**Complete Binary Tree** → Every level is completely filled except possibly the last, which is filled from left to right.
+> [!TIP]
+> Even if the array is already sorted, Heap Sort still builds the heap and performs every extraction.
+>
+> Therefore, its running time remains **O(n log n)**.
 
 ---
 
-## 17. Heap Index Formulae
+# 1️⃣2️⃣ Number of Comparisons
 
-For a node at index `i`:
+| Case | Comparisons |
+|------|-------------|
+| 🟡 Average | **O(n log n)** |
+| 🔴 Worst | **O(n log n)** |
 
-Left Child  → `2*i + 1`
+---
 
-Right Child → `2*i + 2`
+# 1️⃣3️⃣ Number of Swaps
 
-Parent      → `(i-1)/2`
+| Case | Swaps |
+|------|-------|
+| Approximate | **O(n log n)** |
+
+> Every extracted element may require multiple swaps while restoring the heap property.
+
+---
+
+# 1️⃣4️⃣ When is Heap Sort Useful?
+
+✅ Guaranteed **O(n log n)** performance
+
+✅ Memory-constrained systems
+
+✅ Priority Queue implementation
+
+✅ When worst-case performance matters
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Uses a **Binary Heap**
+>
+> ✅ Root always contains the maximum element
+>
+> ✅ In-place
+>
+> ✅ Guaranteed **O(n log n)** time complexity
+>
+> ❌ Not Stable
+>
+> ✅ Preferred when worst-case guarantees are important
+
+---
+
+# 1️⃣6️⃣ Important Terminologies
+
+| Term | Meaning |
+|------|---------|
+| **Heap** | A Complete Binary Tree satisfying the Heap Property |
+| **Max Heap** | Parent ≥ Children |
+| **Min Heap** | Parent ≤ Children |
+| **Heapify** | Restores the heap property |
+| **Build Heap** | Converts an array into a valid heap |
+| **Root** | First element (index `0`) |
+| **Leaf Nodes** | Nodes with no children |
+| **Complete Binary Tree** | Every level is full except possibly the last, which is filled from left to right |
+
+---
+
+# 1️⃣7️⃣ Heap Index Formulae
+
+For a node at index **i**,
+
+| Node | Formula |
+|------|---------|
+| Left Child | `2 * i + 1` |
+| Right Child | `2 * i + 2` |
+| Parent | `(i - 1) / 2` |
+
+### Visual Representation
+
+```text
+              i
+            /   \
+      2*i+1     2*i+2
+       (L)       (R)
+
+Parent of any node:
+
+      (i-1)/2
+         │
+         ▼
+         i
+```
