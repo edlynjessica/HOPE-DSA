@@ -80,40 +80,7 @@ public static void mergeSort(int[] arr, int left, int right){
     merge(arr, left, mid, right);
 }
 
-private static void merge(int[] arr, int left, int mid, int right){
 
-    int[] temp = new int[right - left + 1];
-
-    int i = left;
-    int j = mid + 1;
-    int k = 0;
-
-    while(i <= mid && j <= right){
-
-        if(arr[i] <= arr[j]){
-            temp[k++] = arr[i++];
-        }else{
-            temp[k++] = arr[j++];
-        }
-
-    }
-    while(i <= mid){
-        temp[k++] = arr[i++];
-    }
-    while(j <= right){
-        temp[k++] = arr[j++];
-    }  
-    for(int x = 0; x < temp.length; x++){
-        arr[left + x] = temp[x];
-    }
-}
-```
-
----
-
-## 5. Iterative Code (Bottom-Up Merge Sort)
-
-```java
 public static void merge(int[] arr, int left, int mid, int right){
 
     // Create Left Array
@@ -166,7 +133,35 @@ public static void merge(int[] arr, int left, int mid, int right){
 }
 ```
 
-> The `mergeSort()` function remains the same as the recursive version.
+---
+
+## 5. Iterative Code (Bottom-Up Merge Sort)
+
+```java
+public static void mergeSort(int[] arr){
+
+    int n = arr.length;
+
+    // size = current size of subarrays to merge
+    for(int size = 1; size < n; size *= 2){
+
+        // left = starting index of first subarray
+        for(int left = 0; left < n - size; left += 2 * size){
+
+            // Ending index of first subarray
+            int mid = left + size - 1;
+
+            // Ending index of second subarray
+            int right = Math.min(left + 2 * size - 1, n - 1);
+
+            // Merge the two sorted subarrays
+            merge(arr, left, mid, right);
+        }
+    }
+}
+```
+
+> The `merge()` function remains the same as the recursive version.
 
 ---
 
