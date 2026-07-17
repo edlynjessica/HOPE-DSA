@@ -1,79 +1,99 @@
-# Selection Sort
+# 🎯 Selection Sort
 
-## 1. Idea
+> [!NOTE]
+> **Selection Sort** repeatedly finds the **smallest**(minimum) element from the unsorted portion and places it at its correct position.
+
+### 🔗 Practice Link
+
+**GeeksforGeeks:**  
+https://www.geeksforgeeks.org/problems/selection-sort/1
+
+---
+
+# 1️⃣ Idea
 
 Selection Sort repeatedly finds the **smallest element** from the unsorted part of the array and places it at its correct position.
 
 At every pass,
 
-- Left side → Sorted
-- Right side → Unsorted
+| Left Side | Right Side |
+|-----------|------------|
+| ✅ Sorted | ⏳ Unsorted |
 
 Initially,
 
-Sorted = Empty
+```text
+Sorted   = Empty
 Unsorted = Entire Array
+```
 
-Example:
+### Example
 
+```text
 64 25 12 22 11
 
-  ↓
+↓
 
 11 | 25 12 22 64
 
-  ↓
+↓
 
 11 12 | 25 22 64
 
-  ↓
+↓
 
 11 12 22 | 25 64
 
-  ↓
+↓
 
 11 12 22 25 | 64
 
-  ↓
+↓
 
 11 12 22 25 64
+```
 
 ---
 
-## 2. Mental Model
+# 2️⃣ Mental Model
 
-Imagine arranging students by height.
-Instead of swapping every time you see a shorter student, you first walk through the entire line,
-find the shortest student,and only then place them at the front.
-Repeat for the remaining students.
+> 📏 Imagine arranging students by height.
+
+Instead of swapping every time you see a shorter student, you first walk through the **entire line**, find the **shortest student**, and then place them at the front.
+
+Repeat the same process for the remaining students.
 
 ---
 
-## 3. Algorithm
+# 3️⃣ Algorithm
 
-For every position i,
+For every position **i**,
 
-1. Assume current element is the minimum.
+1. Assume the current element is the minimum.
 2. Search the remaining array.
 3. Find the actual minimum.
-4. Swap it with index i.
+4. Swap it with index **i**.
 
 Repeat until only one element remains.
 
 ---
 
-## 4. Iterative Code
+# 4️⃣ Iterative Code
 
 ```java
 public static void selectionSort(int[] arr){
     int n = arr.length;
-    for(int i=0;i<n-1;i++){
+
+    for(int i = 0; i < n - 1; i++){
+
         int minIndex = i;
-        for(int j=i+1;j<n;j++){
+
+        for(int j = i + 1; j < n; j++){
             if(arr[j] < arr[minIndex]){
                 minIndex = j;
             }
         }
+
         int temp = arr[i];
         arr[i] = arr[minIndex];
         arr[minIndex] = temp;
@@ -83,168 +103,198 @@ public static void selectionSort(int[] arr){
 
 ---
 
-## 5. Recursive Code
+# 5️⃣ Recursive Code
 
 ```java
 public static void selectionSort(int[] arr){
     helper(arr,0);
 }
+
 private static void helper(int[] arr,int start){
-    if(start == arr.length-1)
+
+    if(start == arr.length - 1)
         return;
+
     int minIndex = start;
-    for(int i=start+1;i<arr.length;i++){
+
+    for(int i = start + 1; i < arr.length; i++){
         if(arr[i] < arr[minIndex]){
             minIndex = i;
         }
-
     }
 
     int temp = arr[start];
     arr[start] = arr[minIndex];
     arr[minIndex] = temp;
-    helper(arr,start+1);
+
+    helper(arr,start + 1);
 }
 ```
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Iterative:
+### Iterative
 
-for every i → find minimum → swap → next i
+```text
+for every i
+      ↓
+find minimum
+      ↓
+swap
+      ↓
+next i
+```
 
-#### Recursive:
+### Recursive
 
-helper(start) → find minimum → swap → helper(start+1)
+```text
+helper(start)
+      ↓
+find minimum
+      ↓
+swap
+      ↓
+helper(start + 1)
+```
 
-Instead of the loop changing start,
-the recursive call changes start.
+Instead of the **loop** changing the starting index, the **recursive call** changes it.
 
 ---
 
-## 7. Dry Run
+# 7️⃣ Dry Run
 
-Array: [29,10,14,37,13]
+Array
 
-Pass 1
-Minimum = 10
+```text
+[29, 10, 14, 37, 13]
+```
 
-Swap with 29
+| Pass | Minimum | Action | Array |
+|------|---------|--------|-------|
+| Initial | - | Initial Array | 29 10 14 37 13 |
+| 1 | 10 | Swap with 29 | 10 29 14 37 13 |
+| 2 | 13 | Swap with 29 | 10 13 14 37 29 |
+| 3 | 14 | Already in correct position | 10 13 14 37 29 |
+| 4 | 29 | Swap with 37 | 10 13 14 29 37 |
 
-10 29 14 37 13
+✅ Sorted Array
 
-Pass 2
-Minimum = 13
-
-Swap with 29
-
-10 13 14 37 29
-
-Pass 3
-Minimum = 14
-
-Already correct
-
-10 13 14 37 29
-
-Pass 4
-Minimum = 29
-
-Swap
-
+```text
 10 13 14 29 37
-
-Sorted.
-
----
-
-## 8. Complexity
-
-Best Case  : O(n²)
-
-Average    : O(n²)
-
-Worst      : O(n²)
-
-Extra Space: O(1)
-
-Reason:
-
-Even if the array is already sorted,
-Selection Sort still searches the entire unsorted part every pass.
+```
 
 ---
 
-## 9. Stable?
+# 8️⃣ Complexity
 
-❌ No
+### Time Complexity
 
-Reason:
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n²)** |
+| 🟡 Average | **O(n²)** |
+| 🔴 Worst | **O(n²)** |
 
-The minimum element may jump ahead of equal elements,
-changing their original order.
+### Why?
 
----
+- Selection Sort always scans the **entire unsorted portion** to find the minimum.
+- Therefore, the number of comparisons remains the same regardless of the input.
 
-## 10. In-place?
+### Space Complexity
 
-✅ Yes
+| Type | Complexity |
+|------|------------|
+| Auxiliary Space | **O(1)** |
 
-Reason:
+### Why?
 
-Only a few variables are used.
-No extra array is created.
+Only a few extra variables (`minIndex`, `temp`) are used.
 
----
-
-## 11. Adaptive?
-
-❌ No
-
-Reason:
-
-Already sorted arrays still require all comparisons.
+No additional array or data structure is created.
 
 ---
 
-## 12. Number of Comparisons
+# 9️⃣ Stable?
 
-Always
+❌ **No**
 
-(n-1)+(n-2)+...+1  =  n(n-1)/2
-
-Comparisons are fixed.
-
----
-
-## 13. Number of Swaps
-
-Maximum = n-1
-One swap per pass.
-This is much fewer than Bubble Sort.
+> [!TIP]
+> The minimum element may **jump ahead** of equal elements during swapping.
+>
+> This changes their **relative order**, making Selection Sort **unstable**.
 
 ---
 
-## 14. When is Selection Sort useful?
+# 🔟 In-place?
 
-- Memory is limited.
-- Swapping is expensive.
-- Small datasets.
+✅ **Yes**
+
+> [!TIP]
+> Only a few variables are used.
+>
+> No extra array is created.
 
 ---
 
-## 15. Key Takeaways
+# 1️⃣1️⃣ Adaptive?
 
-✅ Finds minimum every pass.
+❌ **No**
 
-✅ Swaps only once per pass.
+> [!TIP]
+> Even if the array is already sorted, Selection Sort still performs all comparisons.
+>
+> Therefore, its running time remains **O(n²)**.
 
-✅ Comparisons never reduce.
+---
 
-✅ Not stable.
+# 1️⃣2️⃣ Number of Comparisons
 
-✅ In-place.
+| Case | Comparisons |
+|------|-------------|
+| Best | **n(n − 1) / 2** |
+| Average | **n(n − 1) / 2** |
+| Worst | **n(n − 1) / 2** |
 
-✅ Not adaptive.
+> Comparisons are **fixed** for every input.
+
+---
+
+# 1️⃣3️⃣ Number of Swaps
+
+| Case | Swaps |
+|------|-------|
+| Maximum | **n − 1** |
+
+> Only **one swap per pass** is performed.
+>
+> This is significantly fewer than Bubble Sort.
+
+---
+
+# 1️⃣4️⃣ When is Selection Sort Useful?
+
+✅ Memory is limited
+
+✅ Swapping is expensive
+
+✅ Small datasets
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Finds the **minimum element** in every pass
+>
+> ✅ Performs only **one swap per pass**
+>
+> ✅ Number of comparisons never reduces
+>
+> ❌ Not Stable
+>
+> ✅ In-place
+>
+> ❌ Not Adaptive
