@@ -114,27 +114,59 @@ private static void merge(int[] arr, int left, int mid, int right){
 ## 5. Iterative Code (Bottom-Up Merge Sort)
 
 ```java
-public static void mergeSort(int[] arr){
+public static void merge(int[] arr, int left, int mid, int right){
 
-    int n = arr.length;
+    // Create Left Array
+    int[] leftArr = new int[mid - left + 1];
 
-    for(int size = 1; size < n; size *= 2){
+    // Create Right Array
+    int[] rightArr = new int[right - mid];
 
-        for(int left = 0; left < n - size; left += 2 * size){
-
-            int mid = left + size - 1;
-            int right = Math.min(left + 2 * size - 1, n - 1);
-
-            merge(arr, left, mid, right);
-
-        }
-
+    // Copy Left Half
+    for(int i = 0; i < leftArr.length; i++){
+        leftArr[i] = arr[left + i];
     }
 
+    // Copy Right Half
+    for(int i = 0; i < rightArr.length; i++){
+        rightArr[i] = arr[mid + 1 + i];
+    }
+
+    int i = 0;
+    int j = 0;
+    int k = left;
+
+    // Merge both arrays
+    while(i < leftArr.length && j < rightArr.length){
+
+        if(leftArr[i] <= rightArr[j]){
+            arr[k] = leftArr[i];
+            i++;
+        }else{
+            arr[k] = rightArr[j];
+            j++;
+        }
+
+        k++;
+    }
+
+    // Copy remaining left elements
+    while(i < leftArr.length){
+        arr[k] = leftArr[i];
+        i++;
+        k++;
+    }
+
+    // Copy remaining right elements
+    while(j < rightArr.length){
+        arr[k] = rightArr[j];
+        j++;
+        k++;
+    }
 }
 ```
 
-> The `merge()` function remains the same as the recursive version.
+> The `mergeSort()` function remains the same as the recursive version.
 
 ---
 
