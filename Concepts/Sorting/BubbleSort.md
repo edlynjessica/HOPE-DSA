@@ -1,22 +1,35 @@
-# Bubble Sort
+# 🫧 Bubble Sort
 
-## 1. Idea
+> [!NOTE]
+> **Bubble Sort** repeatedly compares adjacent elements and swaps them if they are in the wrong order.
+
+### 🔗 Practice Link
+
+**GeeksforGeeks:**  
+https://www.geeksforgeeks.org/problems/bubble-sort/1
+
+---
+
+# 1️⃣ Idea
 
 Bubble Sort repeatedly compares **adjacent elements** and swaps them if they are in the wrong order.
 
 At every pass,
 
-- Left side → Unsorted
-- Right side → Sorted
+| Left Side | Right Side |
+|-----------|------------|
+| ⏳ Unsorted | ✅ Sorted |
 
 Initially,
 
+```text
 Unsorted = Entire Array
+Sorted   = Empty
+```
 
-Sorted = Empty
+### Example
 
-Example:
-
+```text
 64 34 25 12 22
 
 ↓
@@ -38,20 +51,21 @@ Example:
 ↓
 
 12 22 25 34 64
+```
 
 ---
 
-## 2. Mental Model
+# 2️⃣ Mental Model
 
-Imagine air bubbles rising in water.
+> 🫧 Imagine air bubbles rising in water.
 
-The largest bubble always rises to the top.
+The **largest bubble** always rises to the top.
 
-Similarly, after every pass, the largest element moves to the end of the array.
+Similarly, after every pass, the **largest element** moves to the end of the array.
 
 ---
 
-## 3. Algorithm
+# 3️⃣ Algorithm
 
 For every pass,
 
@@ -64,21 +78,26 @@ Repeat until the array is sorted.
 
 ---
 
-## 4. Iterative Code
+# 4️⃣ Iterative Code
 
 ```java
 public static void bubbleSort(int[] arr){
     int n = arr.length;
-    for(int i=0;i<n-1;i++){
+
+    for(int i = 0; i < n - 1; i++){
+
         boolean swapped = false;
-        for(int j=0;j<n-i-1;j++){
-            if(arr[j] > arr[j+1]){
+
+        for(int j = 0; j < n - i - 1; j++){
+
+            if(arr[j] > arr[j + 1]){
                 int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
                 swapped = true;
             }
         }
+
         if(!swapped)
             break;
     }
@@ -87,7 +106,7 @@ public static void bubbleSort(int[] arr){
 
 ---
 
-## 5. Recursive Code
+# 5️⃣ Recursive Code
 
 ```java
 public static void bubbleSort(int[] arr){
@@ -95,176 +114,204 @@ public static void bubbleSort(int[] arr){
 }
 
 private static void helper(int[] arr, int n){
+
     if(n == 1)
         return;
+
     boolean swapped = false;
-    for(int i=0;i<n-1;i++){
-        if(arr[i] > arr[i+1]){
+
+    for(int i = 0; i < n - 1; i++){
+
+        if(arr[i] > arr[i + 1]){
             int temp = arr[i];
-            arr[i] = arr[i+1];
-            arr[i+1] = temp;
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
             swapped = true;
         }
     }
+
     if(!swapped)
         return;
-    helper(arr, n-1);
+
+    helper(arr, n - 1);
 }
 ```
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Iterative:
+### Iterative
 
-for every pass → compare adjacent elements → largest reaches end → next pass
+```text
+for every pass
+      ↓
+compare adjacent elements
+      ↓
+largest reaches the end
+      ↓
+next pass
+```
 
-#### Recursive:
+### Recursive
 
-helper(n) → one pass till n → largest reaches end → helper(n-1)
+```text
+helper(n)
+      ↓
+one pass till n
+      ↓
+largest reaches the end
+      ↓
+helper(n - 1)
+```
 
-Instead of the loop reducing the unsorted size,
-the recursive call reduces it.
+Instead of the **loop** reducing the unsorted size, the **recursive call** reduces it.
 
 ---
 
-## 7. Dry Run
+# 7️⃣ Dry Run
 
-Array: [5,1,4,2]
+Array
 
-Pass 1
+```text
+[5, 1, 4, 2]
+```
 
-5 1 4 2
+| Pass | Action | Array |
+|------|--------|-------|
+| Initial | Initial Array | 5 1 4 2 |
+| 1 | Swap 5 & 1 | 1 5 4 2 |
+| 1 | Swap 5 & 4 | 1 4 5 2 |
+| 1 | Swap 5 & 2 | 1 4 2 5 |
+| 2 | Swap 4 & 2 | 1 2 4 5 |
+| 3 | No swaps | 1 2 4 5 |
 
-↓
+✅ Sorted Array
 
-1 5 4 2
-
-↓
-
-1 4 5 2
-
-↓
-
-1 4 2 5
-
-Pass 2
-
-↓
-
-1 4 2 5
-
-↓
-
+```text
 1 2 4 5
-
-Pass 3
-
-No swaps
-
-Array is already sorted.
-
----
-
-## 8. Complexity
-
-Best Case  : O(n)
-
-Average    : O(n²)
-
-Worst      : O(n²)
-
-Extra Space: O(1)
-
-Reason:
-
-If no swaps occur during a pass,
-the array is already sorted,
-so the algorithm terminates early.
-
----
-
-## 9. Stable?
-
-✅ Yes
-
-Reason:
-
-Only adjacent elements are swapped.
-Equal elements are never swapped because the condition is
-
-```java
-arr[j] > arr[j+1]
 ```
-and not
-```java
-arr[j] >= arr[j+1]
-```
-Hence, their relative order is preserved.
 
 ---
 
-## 10. In-place?
+# 8️⃣ Complexity
 
-✅ Yes
+### Time Complexity
 
-Reason:
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n)** |
+| 🟡 Average | **O(n²)** |
+| 🔴 Worst | **O(n²)** |
 
-Only a temporary variable is used for swapping.
-No extra array is created.
+### Why?
 
----
+- **Best Case:** No swaps occur during the first pass, so the algorithm terminates early.
+- **Worst Case:** Every adjacent pair needs swapping (reverse sorted array).
 
-## 11. Adaptive?
+### Space Complexity
 
-✅ Yes
+| Type | Complexity |
+|------|------------|
+| Auxiliary Space | **O(1)** |
 
-Reason:
+### Why?
 
-Using the `swapped` flag,
-if no swaps occur during a pass,
-the algorithm stops immediately.
+Only one temporary variable is used during swapping.
 
----
-
-## 12. Number of Comparisons
-
-Worst Case → (n-1)+(n-2)+...+1 = n(n-1)/2
-
-Best Case (Optimized) → n-1
+No additional array or data structure is created.
 
 ---
 
-## 13. Number of Swaps
+# 9️⃣ Stable?
 
-Best Case → 0
+✅ **Yes**
 
-Worst Case → n(n-1)/2
-
-(Reverse sorted array)
+> [!TIP]
+> Only **adjacent elements** are swapped.
+>
+> Since the condition is
+>
+> ```java
+> arr[j] > arr[j + 1]
+> ```
+>
+> and **not**
+>
+> ```java
+> arr[j] >= arr[j + 1]
+> ```
+>
+> equal elements never swap places, so their **relative order remains unchanged**.
 
 ---
 
-## 14. When is Bubble Sort useful?
+# 🔟 In-place?
 
-- Small datasets.
-- Detecting whether an array is already sorted.
-- Educational purposes.
-- Rarely used in real-world applications.
+✅ **Yes**
+
+> [!TIP]
+> Only one temporary variable is used for swapping.
+>
+> No extra array is created.
 
 ---
 
-## 15. Key Takeaways
+# 1️⃣1️⃣ Adaptive?
 
-✅ Compares adjacent elements.
+✅ **Yes**
 
-✅ Largest element reaches the end after every pass.
+> [!TIP]
+> Using the **swapped** flag, if no swaps occur during a pass, the algorithm stops immediately.
+>
+> Therefore, the best-case time complexity becomes **O(n)**.
 
-✅ Stable.
+---
 
-✅ In-place.
+# 1️⃣2️⃣ Number of Comparisons
 
-✅ Adaptive (using swapped flag).
+| Case | Comparisons |
+|------|-------------|
+| 🟢 Best (Optimized) | **n − 1** |
+| 🔴 Worst | **n(n − 1) / 2** |
 
-✅ Early termination is possible.
+---
+
+# 1️⃣3️⃣ Number of Swaps
+
+| Case | Swaps |
+|------|-------|
+| 🟢 Best | **0** |
+| 🔴 Worst | **n(n − 1) / 2** |
+
+*(Reverse sorted array)*
+
+---
+
+# 1️⃣4️⃣ When is Bubble Sort Useful?
+
+✅ Small datasets
+
+✅ Detecting whether an array is already sorted
+
+✅ Educational purposes
+
+✅ Rarely used in real-world applications
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Compares **adjacent elements**
+>
+> ✅ Largest element reaches the **end after every pass**
+>
+> ✅ Stable
+>
+> ✅ In-place
+>
+> ✅ Adaptive (using the **swapped** flag)
+>
+> ✅ Early termination is possible
