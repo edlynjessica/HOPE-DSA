@@ -1,48 +1,78 @@
-# Quick Sort
+# ⚡ Quick Sort
 
-## 1. Idea
+> [!NOTE]
+> **Quick Sort** follows the **Divide and Conquer** paradigm by choosing a **pivot**, partitioning the array around it, and recursively sorting the resulting subarrays.
+
+### 🔗 Practice Links
+
+- **GeeksforGeeks:** https://www.geeksforgeeks.org/problems/quick-sort/1
+- **LeetCode:** https://leetcode.com/problems/sort-an-array/
+
+---
+
+# 1️⃣ Idea
 
 Quick Sort follows the **Divide and Conquer** approach.
 
 It selects a **pivot** element and partitions the array such that
 
-- Elements smaller than the pivot are placed on the left.
-- Elements larger than the pivot are placed on the right.
+| Left Side | Pivot | Right Side |
+|-----------|-------|------------|
+| Smaller Elements | Pivot | Larger Elements |
 
 The same process is then repeated recursively for the left and right subarrays.
 
 Initially,
 
+```text
 Array = Unsorted
+```
 
-Example:
+### Example
 
+```text
 38 27 43 3 9 82 10
 
-→ Choose Pivot = 3
+↓
 
-→ 3 | 27 43 38 9 82 10
+Choose Pivot = 3
 
-→ Sort Right Part
+↓
 
-→ 3 9 | 10 27 43 38 82
+3 | 27 43 38 9 82 10
 
-→ Sort Remaining Parts
+↓
 
-→ 3 9 10 27 38 43 82
+Sort Right Part
+
+↓
+
+3 9 | 10 27 43 38 82
+
+↓
+
+Sort Remaining Parts
+
+↓
+
+3 9 10 27 38 43 82
+```
 
 ---
 
-## 2. Mental Model
+# 2️⃣ Mental Model
 
-Imagine choosing one student as a reference.
-Move all shorter students to the left.
-Move all taller students to the right.
+> 👥 Imagine choosing one student as a reference.
+
+Move all **shorter students** to the left.
+
+Move all **taller students** to the right.
+
 Now repeat the same process separately for both groups.
 
 ---
 
-## 3. Algorithm
+# 3️⃣ Algorithm
 
 1. Choose a pivot element.
 2. Partition the array around the pivot.
@@ -53,7 +83,7 @@ Repeat until every subarray contains at most one element.
 
 ---
 
-## 4. Recursive Code
+# 4️⃣ Recursive Code
 
 ```java
 public static void quickSort(int[] arr, int low, int high){
@@ -67,9 +97,11 @@ public static void quickSort(int[] arr, int low, int high){
 
     while(start <= end){
 
-        while(arr[start] < pivot) start++;
+        while(arr[start] < pivot)
+            start++;
 
-        while(arr[end] > pivot) end--;
+        while(arr[end] > pivot)
+            end--;
 
         if(start <= end){
 
@@ -81,6 +113,7 @@ public static void quickSort(int[] arr, int low, int high){
             end--;
         }
     }
+
     quickSort(arr, low, end);
     quickSort(arr, start, high);
 }
@@ -88,13 +121,13 @@ public static void quickSort(int[] arr, int low, int high){
 
 ---
 
-## 5. Iterative Code
+# 5️⃣ Iterative Code
 
 ```java
 public static void quickSort(int[] arr){
 
     Stack<int[]> stack = new Stack<>();
-    stack.push(new int[]{0, arr.length-1});
+    stack.push(new int[]{0, arr.length - 1});
 
     while(!stack.isEmpty()){
 
@@ -108,13 +141,15 @@ public static void quickSort(int[] arr){
 
         int start = low;
         int end = high;
-        int pivot = arr[low + (high-low)/2];
+        int pivot = arr[low + (high - low) / 2];
 
         while(start <= end){
 
-            while(arr[start] < pivot) start++;
+            while(arr[start] < pivot)
+                start++;
 
-            while(arr[end] > pivot) end--;
+            while(arr[end] > pivot)
+                end--;
 
             if(start <= end){
 
@@ -126,188 +161,223 @@ public static void quickSort(int[] arr){
                 end--;
             }
         }
+
         if(low < end)
             stack.push(new int[]{low, end});
 
         if(start < high)
             stack.push(new int[]{start, high});
-
     }
-
 }
 ```
 
 ---
 
-## 6. How recursion replaces iteration
+# 6️⃣ How Recursion Replaces Iteration
 
-#### Recursive:
+### Recursive
 
+```text
 Choose Pivot
+      ↓
+Partition
+      ↓
+Sort Left Half
+      ↓
+Sort Right Half
+```
 
-→ Partition
+### Iterative
 
-→ Sort Left Half
-
-→ Sort Right Half
-
-#### Iterative:
-
+```text
 Choose Pivot
+      ↓
+Partition
+      ↓
+Push Left Range into Stack
+      ↓
+Push Right Range into Stack
+      ↓
+Repeat until Stack becomes empty
+```
 
-→ Partition
-
-→ Push Left Range into Stack
-
-→ Push Right Range into Stack
-
-→ Repeat until Stack becomes empty.
-
-Instead of the recursive calls maintaining the subarrays,
-the stack stores the subarray boundaries.
+Instead of recursive calls maintaining the subarrays, the **stack stores the subarray boundaries**.
 
 ---
 
-## 7. Dry Run
+# 7️⃣ Dry Run
 
-Array:
+Array
 
-[8,4,7,9,3,10,5]
+```text
+[8, 4, 7, 9, 3, 10, 5]
+```
 
+### First Partition
+
+```text
 Pivot = 9
 
-→ 8 4 7 5 3 | 9 | 10
+↓
 
-Sort Left
+8 4 7 5 3 | 9 | 10
+```
 
+### Sort Left Part
+
+```text
 Pivot = 7
 
-→ 4 3 5 | 7 | 8
+↓
 
-Sort Left
+4 3 5 | 7 | 8
+```
 
-→ 3 4 5
+### Sort Remaining Part
 
-Final Array
+```text
+3 4 5
+```
 
-→ 3 4 5 7 8 9 10
+✅ Sorted Array
 
-Sorted.
-
----
-
-## 8. Complexity
-
-Best Case  : O(n log n)
-
-Average    : O(n log n)
-
-Worst      : O(n²)
-
-Extra Space:
-
-Recursive : O(log n) (Average)
-
-Worst Case : O(n)
-
-Reason:
-
-Each partition processes all elements once.
-Balanced partitions produce log₂n levels.
-Highly unbalanced partitions lead to O(n²).
+```text
+3 4 5 7 8 9 10
+```
 
 ---
 
-## 9. Stable?
+# 8️⃣ Complexity
 
-❌ No
+### Time Complexity
 
-Reason:
+| Case | Complexity |
+|------|------------|
+| 🟢 Best | **O(n log n)** |
+| 🟡 Average | **O(n log n)** |
+| 🔴 Worst | **O(n²)** |
 
-Swapping during partitioning may change the relative order of equal elements.
+### Why?
 
----
+- Every partition processes all elements once.
+- Balanced partitions produce **log₂ n** recursive levels.
+- Highly unbalanced partitions lead to **O(n²)**.
 
-## 10. In-place?
+### Space Complexity
 
-✅ Yes
+| Case | Complexity |
+|------|------------|
+| Average | **O(log n)** |
+| Worst | **O(n)** |
 
-Reason:
+### Why?
 
-Only a few variables are used.
-No temporary array is required.
+Quick Sort is **in-place**, but recursive calls require stack space.
 
----
-
-## 11. Adaptive?
-
-❌ No
-
-Reason:
-
-Even if the array is nearly sorted,
-
-Quick Sort still performs partitioning.
-A poor pivot choice may even produce the worst-case complexity.
+Balanced partitions require **O(log n)** recursion depth, while highly unbalanced partitions require **O(n)**.
 
 ---
 
-## 12. Number of Comparisons
+# 9️⃣ Stable?
 
-Best / Average : O(n log n)
+❌ **No**
 
-Worst : O(n²)
-
-Depends on how balanced the partitions are.
-
----
-
-## 13. Number of Swaps
-
-Depends on the pivot.
-
-Average : O(n log n)
-
-Worst : O(n²)
+> [!TIP]
+> Swapping elements during partitioning may change the **relative order of equal elements**.
+>
+> Therefore, Quick Sort is **not stable**.
 
 ---
 
-## 14. When is Quick Sort useful?
+# 🔟 In-place?
 
-- Large arrays.
-- In-memory sorting.
-- General-purpose sorting.
-- Faster than Merge Sort in practice due to better cache performance.
-- Used in many standard library implementations (with optimizations).
+✅ **Yes**
 
----
-
-## 15. Key Takeaways
-
-✅ Divide and Conquer algorithm.
-
-✅ Pivot-based sorting.
-
-✅ In-place.
-
-✅ Very fast on average.
-
-✅ Average Time Complexity = O(n log n).
-
-✅ Worst Case = O(n²).
-
-✅ Not Stable.
+> [!TIP]
+> Only a few variables are used during partitioning.
+>
+> No temporary array is required.
 
 ---
 
-## 16. Pivot Selection Methods
+# 1️⃣1️⃣ Adaptive?
 
-- First Element
-- Last Element
-- Middle Element
-- Random Pivot
-- Median of Three
+❌ **No**
 
-A good pivot gives balanced partitions and O(n log n).
+> [!TIP]
+> Even if the array is already or nearly sorted, Quick Sort still performs partitioning.
+>
+> A poor pivot choice may even lead to the **worst-case O(n²)** complexity.
 
-A poor pivot gives highly unbalanced partitions and O(n²).
+---
+
+# 1️⃣2️⃣ Number of Comparisons
+
+| Case | Comparisons |
+|------|-------------|
+| 🟢 Best / Average | **O(n log n)** |
+| 🔴 Worst | **O(n²)** |
+
+> The number of comparisons depends on how balanced the partitions are.
+
+---
+
+# 1️⃣3️⃣ Number of Swaps
+
+| Case | Swaps |
+|------|-------|
+| 🟡 Average | **O(n log n)** |
+| 🔴 Worst | **O(n²)** |
+
+> The number of swaps depends on the chosen pivot and partitioning.
+
+---
+
+# 1️⃣4️⃣ When is Quick Sort Useful?
+
+✅ Large arrays
+
+✅ In-memory sorting
+
+✅ General-purpose sorting
+
+✅ Faster than Merge Sort in practice due to better cache performance
+
+✅ Used in many standard library implementations (with optimizations)
+
+---
+
+# 1️⃣5️⃣ Key Takeaways
+
+> [!IMPORTANT]
+>
+> ✅ Divide and Conquer algorithm
+>
+> ✅ Pivot-based sorting
+>
+> ✅ In-place
+>
+> ✅ Very fast on average
+>
+> ✅ Average Time Complexity = **O(n log n)**
+>
+> ❌ Worst Case = **O(n²)**
+>
+> ❌ Not Stable
+
+---
+
+# 1️⃣6️⃣ Pivot Selection Methods
+
+| Method | Description |
+|--------|-------------|
+| First Element | Simplest approach, but may degrade on sorted arrays |
+| Last Element | Common implementation, same drawbacks as first element |
+| Middle Element | Better for many practical cases |
+| Random Pivot | Reduces the probability of worst-case partitions |
+| Median of Three | Chooses the median of first, middle, and last elements for more balanced partitions |
+
+> [!TIP]
+> A **good pivot** produces balanced partitions, giving **O(n log n)** performance.
+>
+> A **poor pivot** creates highly unbalanced partitions, degrading the algorithm to **O(n²)**.
