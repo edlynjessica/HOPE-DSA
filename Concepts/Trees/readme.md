@@ -89,10 +89,18 @@ When solving a tree problem, ask yourself:
 ```
 Trees/
 ├── README.md
-├── Binary Trees.md
-├── Binary Search Trees.md
-├── Tree Traversals.md
-└── Tree Recursion Patterns.md
+├── 01. Binary Tree Basics.md
+├── 02. Tree Traversals.md
+├── 03. Level Order Traversal (BFS).md
+├── 04. Binary Tree Concepts.md
+├── 05. Binary Search Trees.md
+├── 06. Tree Recursion Patterns.md
+├── 07. Invert Binary Tree.md
+├── 08. Path Sum Pattern.md
+├── 09. Binary Tree Thinking Strategy.md
+├── 10. Complexity Cheatsheet.md
+├── 11. Golden DFS Template.md
+└── 12. Visual Understanding.md
 ```
 
 ---
