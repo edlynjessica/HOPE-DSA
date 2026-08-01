@@ -1,7 +1,7 @@
 # 📘 1D Dynamic Programming
 
 ![Topic](https://img.shields.io/badge/Topic-1D%20Dynamic%20Programming-blue?style=for-the-badge)
-![Language](https://img.shields.io/badge/Language-Java-orange?style=for-the-badge)
+![Language](https://img.shields.io/badge/Language-Java-blueviolet?style=for-the-badge)
 ![Level](https://img.shields.io/badge/Level-Easy%20→%20Medium-green?style=for-the-badge)
 
 ---
