@@ -26,6 +26,48 @@ The same smaller subproblems are solved multiple times during recursion or probl
 
 ---
 
+## 🟩 1D Dynamic Programming
+
+Problems where the DP state is represented using a single dimension.
+
+- 🟢 509. Fibonacci Number
+- 🟢 70. Climbing Stairs
+- 🟢 746. Min Cost Climbing Stairs
+- 🟢 1137. N-th Tribonacci Number
+- 🟡 198. House Robber
+- 🟡 322. Coin Change
+- 🟡 91. Decode Ways
+- 🟡 279. Perfect Squares
+- 🟡 152. Maximum Product Subarray
+
+---
+
+## 🟦 2D Dynamic Programming
+
+Problems where the DP state is represented using a matrix.
+
+- 🟡 62. Unique Paths
+- 🟡 63. Unique Paths II
+- 🟡 64. Minimum Path Sum
+- 🟡 931. Minimum Falling Path Sum
+
+---
+
+## 📌 More Patterns Coming Soon
+
+- Knapsack DP
+- Longest Increasing Subsequence (LIS)
+- Longest Common Subsequence (LCS)
+- String DP
+- Partition DP
+- Interval DP
+- Bitmask DP
+- Digit DP
+- Tree DP
+- Graph DP
+
+---
+
 # Approaches to DP
 
 ## Top-Down (Memoization)
