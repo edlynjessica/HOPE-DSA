@@ -1,0 +1,314 @@
+# 81. Search in Rotated Sorted Array II
+
+![Language](https://img.shields.io/badge/Language-Java-blueviolet?style=for-the-badge)
+![Difficulty](https://img.shields.io/badge/Difficulty-Medium-orange?style=for-the-badge)
+![Topic](https://img.shields.io/badge/Topic-Binary%20Search-blue?style=for-the-badge)
+
+---
+
+## 📖 Problem Statement
+
+Given a sorted array that has been **rotated**, search for a given `target`.
+
+Unlike **33. Search in Rotated Sorted Array**, this problem allows **duplicate values**.
+
+Return:
+
+```text
+true
+
+if the target exists, otherwise:
+
+false
+
+The goal is to use a modified Binary Search approach.
+
+💡 Observation
+
+This problem is almost the same as:
+
+33. Search in Rotated Sorted Array
+
+The important difference is:
+
+Duplicates are allowed.
+
+Because of duplicates, sometimes we cannot determine which half is sorted.
+
+For example:
+
+[1, 0, 1, 1, 1]
+
+Suppose:
+
+left = 0
+mid = 2
+right = 4
+
+Then:
+
+nums[left] = nums[mid] = nums[right] = 1
+
+We cannot tell whether the left half or right half is the sorted half.
+
+⚠️ Special Case : Duplicates
+
+When:
+
+nums[left] == nums[mid] && nums[mid] == nums[right]
+
+we cannot determine which side is sorted.
+
+So safely remove the duplicate boundary elements:
+
+left++;
+right--;
+
+This does not remove a possible unique target because:
+
+nums[left] == nums[mid] == nums[right]
+
+and we already checked:
+
+if(nums[mid] == target)
+
+Therefore, if target were equal to those values, we would already have returned true.
+
+🧠 How It Works
+
+At every iteration:
+
+Step 1: Check the middle
+if(nums[mid] == target)
+    return true;
+Step 2: Handle duplicates
+
+If:
+
+nums[left] == nums[mid] && nums[mid] == nums[right]
+
+we cannot identify the sorted half.
+
+So:
+
+left++;
+right--;
+Step 3: Identify the sorted half
+
+If:
+
+nums[left] <= nums[mid]
+
+then the left half is sorted.
+
+Otherwise:
+
+right half is sorted
+🔍 Case 1 : Left Half is Sorted
+
+If:
+
+nums[left] <= nums[mid]
+
+then check whether the target lies inside the sorted left half:
+
+nums[left] <= target < nums[mid]
+
+If yes:
+
+right = mid - 1;
+
+Otherwise:
+
+left = mid + 1;
+🔍 Case 2 : Right Half is Sorted
+
+Otherwise, the right half is sorted.
+
+Check whether:
+
+nums[mid] < target <= nums[right]
+
+If yes:
+
+left = mid + 1;
+
+Otherwise:
+
+right = mid - 1;
+🧪 Dry Run
+
+Consider:
+
+nums = [2,5,6,0,0,1,2]
+target = 0
+
+Initially:
+
+left = 0
+right = 6
+mid = 3
+
+Array:
+
+[2, 5, 6, 0, 0, 1, 2]
+          ↑
+         mid
+nums[mid] = 0
+
+Target found:
+
+return true
+🔄 Duplicate Example
+
+Consider:
+
+nums = [1,0,1,1,1]
+target = 0
+
+Initially:
+
+left = 0
+mid = 2
+right = 4
+
+Values:
+
+nums[left] = 1
+nums[mid]  = 1
+nums[right] = 1
+
+Therefore:
+
+nums[left] == nums[mid] && nums[mid] == nums[right]
+
+We cannot determine the sorted half.
+
+So:
+
+left++;
+right--;
+
+Now:
+
+left = 1
+right = 3
+
+The search space becomes:
+
+[0, 1, 1]
+ ↑
+left
+
+The algorithm can now determine the correct side and eventually finds 0.
+
+⚠️ Important Difference from Problem 33
+Problem 33
+
+All values are distinct.
+
+Therefore, we can always identify the sorted half.
+
+Time = O(log n)
+Problem 81
+
+Duplicates are allowed.
+
+Sometimes:
+
+nums[left] == nums[mid] == nums[right]
+
+and we have to shrink the search space using:
+
+left++;
+right--;
+
+In the worst case, this can reduce the search space by only two elements at a time.
+
+Therefore:
+
+Worst-case Time = O(n)
+
+But in typical cases where duplicates do not prevent us from identifying the sorted half:
+
+Average / typical Time ≈ O(log n)
+✅ Approach : Modified Binary Search
+Time Complexity
+Average: O(log n)
+
+Worst Case: O(n)
+
+The worst case occurs because duplicates can prevent us from identifying which half is sorted.
+
+Space Complexity
+O(1)
+Code
+class Solution {
+
+    public boolean search(int[] nums, int target) {
+
+        int n=nums.length;
+        int left=0;
+        int right=n-1;
+
+        while(left<=right){
+
+            int mid=left+(right-left)/2;
+
+            if(nums[mid]==target)
+                return true;
+
+            // Special case for handling duplicates
+            // Cannot determine which side is sorted
+            if(nums[left]==nums[mid] && nums[right]==nums[mid]){
+                left++;
+                right--;
+                continue;
+            }
+
+            // Left side is sorted
+            if(nums[left]<=nums[mid]){
+
+                if(nums[left]<=target && target<nums[mid]){
+                    right=mid-1; // search left space
+                }else{
+                    left=mid+1; // search right space
+                }
+
+            }
+
+            // Right side is sorted
+            else{
+
+                if(target<=nums[right] && target>nums[mid]){
+                    left=mid+1; // search right space
+                }else{
+                    right=mid-1; // search left space
+                }
+            }
+        }
+
+        return false;
+    }
+}
+📊 Complexity
+Approach	Time Complexity	Space Complexity
+Modified Binary Search	O(log n) average	O(1)
+Modified Binary Search	O(n) worst case	O(1)
+🎯 Key Takeaways
+This is a modified Binary Search problem.
+At least one half is normally sorted.
+Use the sorted half to decide where the target can exist.
+Duplicates are the special problem.
+When:
+nums[left] == nums[mid] && nums[mid] == nums[right]
+
+we cannot determine the sorted half.
+
+In that situation:
+left++;
+right--;
+Because duplicates can force us to shrink the array one element at a time, the worst-case complexity becomes:
+O(n)
+This is the key difference between 33. Search in Rotated Sorted Array and 81. Search in Rotated Sorted Array II.
+
