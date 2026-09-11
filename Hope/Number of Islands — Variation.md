@@ -8,7 +8,7 @@ Given a binary matrix `grid` containing `0`s and `1`s, find all the islands in t
 
 An island is a group of connected `1`s, where cells are connected **up, down, left, or right**.
 
-Instead of simply counting the islands, **assign a unique number to each island**.
+Instead of simply counting the islands, **assign a unique number(ranking) to each island**.
 
 Start numbering the islands from `1`.
 
